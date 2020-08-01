@@ -1,12 +1,26 @@
-import express from 'express';
+import 'reflect-metadata';
+
+import express, {
+  Request,
+  Response,
+  NextFunction,
+  ErrorRequestHandler,
+} from 'express';
+import 'express-async-errors';
+import cors from 'cors';
+import errorHandler from '@shared/middlewares/errorHandler';
+import routes from './routes';
+
+import '@database/index';
 
 const app = express();
-app.use(express.json())
 
-app.get('/', (request, response) => {
-    return response.json({ message: 'teste'});
-});
+app.use(cors());
+app.use(express.json());
+app.use(routes);
 
-app.listen(3333, function(){
-    console.log('Rodando');
+app.use(errorHandler);
+
+app.listen(3333, function () {
+  console.log('Listening on port 3333');
 });
