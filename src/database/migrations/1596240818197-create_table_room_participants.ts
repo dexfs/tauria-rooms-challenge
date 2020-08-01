@@ -10,10 +10,12 @@ export default class createTableRoomParticipants1596240818197
           {
             name: 'user_id',
             type: 'uuid',
+            isPrimary: true,
           },
           {
             name: 'room_id',
             type: 'uuid',
+            isPrimary: true,
           },
           {
             name: 'created_at',
