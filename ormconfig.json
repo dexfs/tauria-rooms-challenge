@@ -6,8 +6,7 @@
   "password": "root",
   "database": "gab_database",
   "entities":[
-    "./src/modules/users/entities/*.ts",
-    "./src/modules/rooms/entities/*.ts"
+    "./src/modules/**/entities/*.ts"
   ],
   "migrations": [
     "./src/database/migrations/*.ts"
