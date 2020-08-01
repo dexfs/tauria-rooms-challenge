@@ -10,6 +10,6 @@ export default (
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json(err);
   }
-
+  console.error(err);
   next();
 };
