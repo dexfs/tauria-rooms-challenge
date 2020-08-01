@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    # build: .docker/postgres
+    image: postgres:12-alpine
+    restart: always
+    tty: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+    networks:
+      - app-network
+
+  # npm:
+  #   image: node:12
+  #   container_name: npm
+  #   volumes:
+  #   - ./:/var/www
+  #   working_dir: /var/www
+  #   entrypoint: ['npm']
+  #   networks:
+  #     - app-network
+
+volumes:
+  nodemodules: {}
+  db_data: {}
+
+networks:
+  app-network:
+    driver: bridge
