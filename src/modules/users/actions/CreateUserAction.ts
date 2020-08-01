@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import UserRepository from '@modules/users/repositories/UsersRepository';
+import TokenService from '@modules/users/services/tokenService';
 import User from '../entities/User';
 
 interface Input {
@@ -32,7 +33,14 @@ class CreateUserAction {
 
     await userRepository.save(user);
 
-    return user;
+    delete user.password;
+
+    const tokenService = new TokenService();
+    const token = tokenService.generate(user.id);
+    return {
+      user,
+      token,
+    };
   }
 
   private passwordHasher(password: string): Promise<string> {
