@@ -15,8 +15,7 @@
       "@modules/*": ["modules/*"],
       "@database/*": ["database/*"],
       "@config/*": ["config/*"],
-      "@shared/*": ["shared/*"],
-
+      "@shared/*": ["shared/*"]
     }
   }
 }
