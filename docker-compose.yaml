@@ -1,19 +1,32 @@
 version: '3'
 
 services:
-  db:
-    # build: .docker/postgres
-    image: postgres:12-alpine
+  db_app:
+    image: postgres:12
     restart: always
     tty: true
     ports:
       - "5432:5432"
+    env_file:
+      - .env #configure postgres
     volumes:
       - db_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=root
     networks:
       - app-network
+
+  db_test:
+    # build: .docker/postgres
+    image: postgres:12
+    restart: always
+    tty: true
+    ports:
+      - "5433:5432"
+    env_file:
+      - .env.test # configure postgres
+    # command: -p 5433
+    networks:
+      - app-network
+
 
   # npm:
   #   image: node:12

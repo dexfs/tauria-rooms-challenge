@@ -1,21 +1,26 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2020",
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
+    "removeComments": true,
+    "moduleResolution": "node",
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "paths": {
       "@modules/*": ["modules/*"],
       "@database/*": ["database/*"],
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"]
-    }
-  }
+    },
+  },
+  "include": ["./src/**/*.ts"]
 }
