@@ -2,3 +2,6 @@ node_modules
 dist
 tasks.md
 coverage
+.env
+.env.test
+.env.dev
