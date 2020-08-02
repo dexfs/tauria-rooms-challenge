@@ -30,7 +30,7 @@ class Room {
   @JoinColumn({ name: 'room_id' })
   participants: RoomParticipant[];
 
-  @OneToOne(type => User, room => Room, { eager: true })
+  @OneToOne(type => User, room => Room)
   @JoinColumn({ name: 'host_user' })
   host: User;
 
