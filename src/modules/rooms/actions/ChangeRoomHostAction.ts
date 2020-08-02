@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm';
+import { NotFound } from '@shared/utils/errors';
 import RoomRepository from '../repositories/RoomRepository';
 import Room from '../entities/Room';
 
@@ -22,7 +23,7 @@ class ChangeRoomHostAction {
     });
 
     if (!roomFound) {
-      throw new Error('Room not found.');
+      throw new NotFound('Room not found.');
     }
     await roomRepository.update(roomFound.id, { hostUser: newHost });
     const room = await roomRepository.findOne(roomFound.id);

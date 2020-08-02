@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import CreateUserAction from '@modules/users/actions/CreateUserAction';
 import UpdateUserAction from '@modules/users/actions/UpdateUserAction';
 import DeleteUserAction from '@modules/users/actions/DeleteUserAction';
+import GetUserByUsername from '../actions/GetUserByUsername';
 
 import UsersRepository from '../repositories/UsersRepository';
 
@@ -14,8 +15,9 @@ class IndexController {
   }
 
   async show(request: Request, response: Response): Promise<Response> {
-    const usersRepository = getCustomRepository(UsersRepository);
-    const user = await usersRepository.findByUsername(request.params.username);
+    const { username } = request.params;
+    const getUserByUsername = new GetUserByUsername();
+    const user = await getUserByUsername.execute({ username });
     return response.json(user);
   }
 

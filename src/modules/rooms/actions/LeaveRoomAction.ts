@@ -1,8 +1,5 @@
-import { getCustomRepository, DeleteResult } from 'typeorm';
-import RoomRepository from '../repositories/RoomRepository';
+import { getCustomRepository } from 'typeorm';
 import RoomParticipantRepository from '../repositories/RoomParticipantRepository';
-
-import Room from '../entities/Room';
 
 interface Input {
   userId: string;

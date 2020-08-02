@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import { compare, hash } from 'bcryptjs';
 
 import UserRepository from '@modules/users/repositories/UsersRepository';
+import { BadRequest, NotFound } from '@shared/utils/errors';
 import User from '../entities/User';
 
 interface Input {
@@ -19,7 +20,9 @@ class UpdateUserAction {
     mobileToken,
   }: Input): Promise<User | undefined> {
     if (!currentPassword || !newPassword) {
-      throw Error("It's necessary to pass the current and the new password.");
+      throw new BadRequest(
+        "It's necessary to pass the current and the new password.",
+      );
     }
 
     const userRepository = getCustomRepository(UserRepository);
@@ -29,7 +32,7 @@ class UpdateUserAction {
     });
 
     if (!userFound) {
-      throw Error(`Oh no!, user not found`);
+      throw new NotFound(`Oh no!, user not found`);
     }
 
     const isCorrectPassword = await compare(
@@ -38,7 +41,7 @@ class UpdateUserAction {
     );
 
     if (!isCorrectPassword) {
-      throw Error('Current password is not valid.');
+      throw new BadRequest('Current password is not valid.');
     }
 
     const passwordHash = await hash(newPassword, 10);

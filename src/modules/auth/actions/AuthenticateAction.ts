@@ -4,6 +4,7 @@ import { compare } from 'bcryptjs';
 import UserRepository from '@modules/users/repositories/UsersRepository';
 import User from '@modules/users/entities/User';
 import TokenService from '@modules/users/services/tokenService';
+import { Unauthorized } from '@shared/utils/errors';
 
 interface Input {
   username: string;
@@ -24,13 +25,13 @@ class AuthenticateAction {
     });
 
     if (!user) {
-      throw Error('Your username and/or password do not match.');
+      throw new Unauthorized('Your username and/or password do not match.');
     }
 
     const isCorrectPassword = await compare(password, user.password);
 
     if (!isCorrectPassword) {
-      throw Error('Your username and/or password do not match.');
+      throw new Unauthorized('Your username and/or password do not match.');
     }
 
     const tokenService = new TokenService();

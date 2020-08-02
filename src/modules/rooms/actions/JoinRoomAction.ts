@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm';
+import { NotFound, GeneralError } from '@shared/utils/errors';
 import RoomRepository from '../repositories/RoomRepository';
 import RoomParticipantRepository from '../repositories/RoomParticipantRepository';
 
@@ -18,11 +19,11 @@ class JoinRoomAction {
     const room = await roomRepository.findOne(roomId);
 
     if (!room) {
-      throw new Error('The room does not exits.');
+      throw new NotFound('The room does not exits.');
     }
 
     if (room.hostUser === userId) {
-      throw new Error("You're the host.");
+      throw new GeneralError("You're the host.");
     }
 
     const countMembersRoom = await roomParticipantRepository.count({
@@ -30,7 +31,7 @@ class JoinRoomAction {
     });
 
     if (countMembersRoom >= room.capacityLimit) {
-      throw new Error('Maximum room members reached');
+      throw new GeneralError('Maximum room members reached');
     }
 
     const participantJoin = await roomParticipantRepository.create({

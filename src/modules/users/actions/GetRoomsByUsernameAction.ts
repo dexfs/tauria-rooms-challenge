@@ -1,6 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import UsersRepository from '@modules/users/repositories/UsersRepository';
 import Room from '@modules/rooms/entities/Room';
+import { NotFound } from '@shared/utils/errors';
 
 interface Input {
   username: string;
@@ -14,7 +15,7 @@ class GetRoomsByUsername {
     });
 
     if (!user) {
-      throw new Error('User not found!');
+      throw new NotFound('User not found!');
     }
 
     const rooms = user.rooms.reduce((acc, current) => {

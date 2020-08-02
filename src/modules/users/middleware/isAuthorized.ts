@@ -28,7 +28,7 @@ const isAuthorized = (
     };
     next();
   } catch (error) {
-    throw Error('Invalid token!');
+    return response.status(401).json({ message: 'Invalid token!' });
   }
 };
 
