@@ -1,5 +1,4 @@
 import { getCustomRepository } from 'typeorm';
-import { hash } from 'bcryptjs';
 
 import UserRepository from '@modules/users/repositories/UsersRepository';
 import TokenService from '@modules/users/services/tokenService';
@@ -30,10 +29,9 @@ class CreateUserAction {
       throw new GeneralError(`Oh no!, this ${username} already used`);
     }
 
-    const passwordHashed = await this.passwordHasher(password);
     const user = await userRepository.create({
       username,
-      password: passwordHashed,
+      password,
       mobileToken,
     });
 
@@ -47,10 +45,6 @@ class CreateUserAction {
       user,
       token,
     };
-  }
-
-  private passwordHasher(password: string): Promise<string> {
-    return hash(password, 10);
   }
 }
 

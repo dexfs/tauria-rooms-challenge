@@ -5,7 +5,9 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  BeforeInsert,
 } from 'typeorm';
+import { hash } from 'bcryptjs';
 
 import RoomParticipant from '@modules/rooms/entities/RoomParticipant';
 import Room from '@modules/rooms/entities/Room';
@@ -24,7 +26,7 @@ class User {
   @Column({ name: 'mobile_token', nullable: true })
   mobileToken: string;
 
-  @OneToMany(() => Room, room => room.user)
+  @OneToMany(() => Room, room => room.host)
   hostRooms: Room[];
 
   @OneToMany(type => RoomParticipant, roomParticipant => roomParticipant.user)
@@ -35,6 +37,11 @@ class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @BeforeInsert()
+  async setPassword(password: string) {
+    this.password = await hash(password || this.password, 10);
+  }
 }
 
 export default User;
