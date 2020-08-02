@@ -2,10 +2,13 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  // OneToMany,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+import RoomParticipant from '@modules/rooms/entities/RoomParticipant';
+import Room from '@modules/rooms/entities/Room';
 
 @Entity('users')
 class User {
@@ -21,11 +24,11 @@ class User {
   @Column({ name: 'mobile_token', nullable: true })
   mobileToken: string;
 
-  // OneToMany(() => Room, room => room.user)
-  // hostRooms: Room[];
+  @OneToMany(() => Room, room => room.user)
+  hostRooms: Room[];
 
-  // @OneToMany(() => RoomParticipant, roomParticipant => roomParticipant.user)
-  // rooms: RoomParticipant[];
+  @OneToMany(type => RoomParticipant, roomParticipant => roomParticipant.user)
+  rooms: RoomParticipant[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

@@ -24,15 +24,15 @@ class Room {
   hostUser: string;
 
   @Column({ name: 'capacity_limit', nullable: true, default: 5 })
-  capacityLimit: string;
+  capacityLimit: number;
 
-  @OneToMany(type => RoomParticipant, room => Room)
+  @OneToMany(type => RoomParticipant, roomPartipant => roomPartipant.room)
   @JoinColumn({ name: 'room_id' })
   participants: RoomParticipant[];
 
   @OneToOne(type => User, room => Room, { eager: true })
   @JoinColumn({ name: 'host_user' })
-  user: User;
+  host: User;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

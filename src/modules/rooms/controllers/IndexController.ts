@@ -4,11 +4,14 @@ import { getCustomRepository } from 'typeorm';
 import RoomRepository from '../repositories/RoomRepository';
 import CreateRoomAction from '../actions/CreateRoomAction';
 import ChangeRoomHostAction from '../actions/ChangeRoomHostAction';
+import JoinRoomAction from '../actions/JoinRoomAction';
+import LeaveRoomAction from '../actions/LeaveRoomAction';
 
 class IndexController {
-  async index(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response): Promise<Response> {
+    const { roomId } = request.params;
     const roomRepository = getCustomRepository(RoomRepository);
-    const rooms = await roomRepository.find();
+    const rooms = await roomRepository.findOne(roomId);
     return response.json(rooms);
   }
 
@@ -28,6 +31,24 @@ class IndexController {
       ...request.body,
     });
     return response.json(room);
+  }
+
+  async join(request: Request, response: Response): Promise<Response> {
+    const joinRoomAction = new JoinRoomAction();
+    const room = await joinRoomAction.execute({
+      userId: request.user.id,
+      roomId: request.params.roomId,
+    });
+    return response.json(room);
+  }
+
+  async leave(request: Request, response: Response): Promise<void> {
+    const leaveRoomAction = new LeaveRoomAction();
+    await leaveRoomAction.execute({
+      userId: request.user.id,
+      roomId: request.params.roomId,
+    });
+    return response.end();
   }
 }
 

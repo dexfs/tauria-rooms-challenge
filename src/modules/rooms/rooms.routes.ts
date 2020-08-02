@@ -5,11 +5,12 @@ import isAuthorized from '@modules/users/middleware/isAuthorized';
 import IndexController from './controllers/IndexController';
 import createRoomValidation from './validations/createRoomValidation';
 import changeRoomHostValidation from './validations/changeRoomHostValidation';
+import roomIdValidation from './validations/roomIdValidation';
 
 const roomsRouter = Router();
 const roomsController = new IndexController();
 
-roomsRouter.get('/', roomsController.index);
+roomsRouter.get('/:roomId/info', roomsController.show);
 roomsRouter.post(
   '/',
   isAuthorized,
@@ -21,6 +22,20 @@ roomsRouter.post(
   isAuthorized,
   validate(changeRoomHostValidation, {}, {}),
   roomsController.update,
+);
+
+roomsRouter.post(
+  '/:roomId/join',
+  isAuthorized,
+  validate(roomIdValidation, {}, {}),
+  roomsController.join,
+);
+
+roomsRouter.delete(
+  '/:roomId/leave',
+  isAuthorized,
+  validate(roomIdValidation, {}, {}),
+  roomsController.leave,
 );
 
 export default roomsRouter;
