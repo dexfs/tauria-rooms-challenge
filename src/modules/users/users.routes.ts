@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { validate } from 'express-validation';
 import isAuthorized from '@modules/users/middleware/isAuthorized';
-import IndexController from './controllers/IndexController';
+import UsersController from './controllers/UsersController';
 import UserRoomsController from './controllers/UserRoomsController';
 
 import updateUserValidation from './validations/updateUserValidation';
@@ -9,26 +9,23 @@ import createUserValidation from './validations/createUserValidation';
 
 const usersRouter = Router();
 
-const userController = new IndexController();
-const userRoomsController = new UserRoomsController();
-
-usersRouter.get('/', userController.index);
-usersRouter.get('/:username/rooms', userRoomsController.index);
-usersRouter.get('/:username', userController.show);
+usersRouter.get('/', UsersController.index);
+usersRouter.get('/:username/rooms', UserRoomsController.index);
+usersRouter.get('/:username', UsersController.show);
 
 usersRouter.post(
   '/register',
   validate(createUserValidation, {}, {}),
-  userController.create,
+  UsersController.create,
 );
 
 usersRouter.put(
   '/',
   isAuthorized,
   validate(updateUserValidation, {}, {}),
-  userController.update,
+  UsersController.update,
 );
 
-usersRouter.delete('/', isAuthorized, userController.delete);
+usersRouter.delete('/', isAuthorized, UsersController.delete);
 
 export default usersRouter;

@@ -8,27 +8,27 @@ import GetUserByUsername from '../actions/GetUserByUsername';
 import UsersRepository from '../repositories/UsersRepository';
 
 class IndexController {
-  async index(request: Request, response: Response): Promise<Response> {
+  static async index(request: Request, response: Response): Promise<Response> {
     const usersRepository = getCustomRepository(UsersRepository);
     const users = await usersRepository.find();
     return response.json(users);
   }
 
-  async show(request: Request, response: Response): Promise<Response> {
+  static async show(request: Request, response: Response): Promise<Response> {
     const { username } = request.params;
     const getUserByUsername = new GetUserByUsername();
     const user = await getUserByUsername.execute({ username });
     return response.json(user);
   }
 
-  async create(request: Request, response: Response): Promise<Response> {
+  static async create(request: Request, response: Response): Promise<Response> {
     const createUserAction = new CreateUserAction();
     const user = await createUserAction.execute(request.body);
 
     return response.json(user);
   }
 
-  async update(request: Request, response: Response): Promise<Response> {
+  static async update(request: Request, response: Response): Promise<Response> {
     const updateUserAction = new UpdateUserAction();
     const user = await updateUserAction.execute({
       id: request.user.id,
@@ -38,7 +38,7 @@ class IndexController {
     return response.json(user);
   }
 
-  async delete(request: Request, response: Response): Promise<void> {
+  static async delete(request: Request, response: Response): Promise<void> {
     await new DeleteUserAction().execute({ id: request.user.id });
     return response.status(200).end();
   }

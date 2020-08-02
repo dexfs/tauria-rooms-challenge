@@ -5,12 +5,11 @@ import IndexController from './controllers/IndexController';
 import authValidation from './validations/authValidation';
 
 const authRouter = Router();
-const authController = new IndexController();
 
 authRouter.post(
   '/',
   validate(authValidation, {}, {}),
-  authController.authenticate,
+  IndexController.authenticate,
 );
 
 export default authRouter;

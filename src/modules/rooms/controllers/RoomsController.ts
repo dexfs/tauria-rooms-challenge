@@ -7,15 +7,15 @@ import ChangeRoomHostAction from '../actions/ChangeRoomHostAction';
 import JoinRoomAction from '../actions/JoinRoomAction';
 import LeaveRoomAction from '../actions/LeaveRoomAction';
 
-class IndexController {
-  async show(request: Request, response: Response): Promise<Response> {
+class RoomsController {
+  static async show(request: Request, response: Response): Promise<Response> {
     const { roomId } = request.params;
     const roomRepository = getCustomRepository(RoomRepository);
     const rooms = await roomRepository.findOne(roomId);
     return response.json(rooms);
   }
 
-  async create(request: Request, response: Response): Promise<Response> {
+  static async create(request: Request, response: Response): Promise<Response> {
     const createRoom = new CreateRoomAction();
     const room = await createRoom.execute({
       hostUser: request.user.id,
@@ -24,7 +24,7 @@ class IndexController {
     return response.json(room);
   }
 
-  async update(request: Request, response: Response): Promise<Response> {
+  static async update(request: Request, response: Response): Promise<Response> {
     const changeHostAction = new ChangeRoomHostAction();
     const room = await changeHostAction.execute({
       currentHost: request.user.id,
@@ -33,7 +33,7 @@ class IndexController {
     return response.json(room);
   }
 
-  async join(request: Request, response: Response): Promise<Response> {
+  static async join(request: Request, response: Response): Promise<Response> {
     const joinRoomAction = new JoinRoomAction();
     const room = await joinRoomAction.execute({
       userId: request.user.id,
@@ -42,7 +42,7 @@ class IndexController {
     return response.json(room);
   }
 
-  async leave(request: Request, response: Response): Promise<void> {
+  static async leave(request: Request, response: Response): Promise<void> {
     const leaveRoomAction = new LeaveRoomAction();
     await leaveRoomAction.execute({
       userId: request.user.id,
@@ -52,4 +52,4 @@ class IndexController {
   }
 }
 
-export default IndexController;
+export default RoomsController;

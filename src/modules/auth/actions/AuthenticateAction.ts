@@ -17,7 +17,7 @@ interface AuthResult {
 }
 
 class AuthenticateAction {
-  public async execute({ username, password }: Input): Promise<AuthResult> {
+  async execute({ username, password }: Input): Promise<AuthResult> {
     const userRepository = getCustomRepository(UserRepository);
     const user = await userRepository.findOne({
       where: { username },
