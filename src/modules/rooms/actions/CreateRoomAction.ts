@@ -5,7 +5,7 @@ import Room from '../entities/Room';
 interface Input {
   name: string;
   hostUser: string;
-  capacity?: number;
+  capacityLimit?: number;
 }
 
 class CreateRoomAction {
