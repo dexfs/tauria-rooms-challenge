@@ -20,7 +20,6 @@
       "@database/*": ["database/*"],
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"]
-    },
-  },
-  "include": ["./src/**/*.ts"]
+    }
+  }
 }
