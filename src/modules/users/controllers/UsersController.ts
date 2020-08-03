@@ -25,7 +25,7 @@ class IndexController {
     const createUserAction = new CreateUserAction();
     const user = await createUserAction.execute(request.body);
 
-    return response.json(user);
+    return response.status(201).json(user);
   }
 
   static async update(request: Request, response: Response): Promise<Response> {
