@@ -79,12 +79,10 @@ $ yarn dev:server
 ## ❯ Tests
 
 ```bash
-# creating .env.test file
-$ cp .env.test.example .env.test
-
 # running tests
 $ yarn test
 ```
+> Tests run in memory using sqlite
 
 ## ❯ Routes and Payloads
 

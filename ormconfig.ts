@@ -41,23 +41,6 @@ const connectionOptions = [
     seeds,
     dropSchema: true,
   },
-
-  // {
-  //   name: 'test',
-  //   type: 'postgres',
-  //   database: String(process.env.TYPEORM_DATABASE),
-  //   host: String(process.env.TYPEORM_HOST),
-  //   port: Number(process.env.TYPEORM_PORT),
-  //   username: String(process.env.TYPEORM_USERNAME),
-  //   password: String(process.env.TYPEORM_PASSWORD),
-  //   synchronize: true,
-  //   logging: false,
-  //   entities,
-  //   migrations,
-  //   factories,
-  //   seeds,
-  //   dropSchema: true,
-  // },
 ];
 
 module.exports = connectionOptions;

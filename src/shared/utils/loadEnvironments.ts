@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 const envObj: { production: string; development: string; test: string } = {
   production: '.env',
   development: '.env.dev',
-  test: '.env.test',
+  test: '',
 };
 
 export function loadEnv(): dotenv.DotenvConfigOutput | string {
