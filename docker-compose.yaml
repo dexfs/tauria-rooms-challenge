@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  db_app:
+    image: postgres:12
+    restart: always
+    tty: true
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env #configure postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  db_test:
+    # build: .docker/postgres
+    image: postgres:12
+    restart: always
+    tty: true
+    ports:
+      - "5433:5432"
+    env_file:
+      - .env.test # configure postgres
+    # command: -p 5433
+    networks:
+      - app-network
+
+
+  # npm:
+  #   image: node:12
+  #   container_name: npm
+  #   volumes:
+  #   - ./:/var/www
+  #   working_dir: /var/www
+  #   entrypoint: ['npm']
+  #   networks:
+  #     - app-network
+
+volumes:
+  nodemodules: {}
+  db_data: {}
+
+networks:
+  app-network:
+    driver: bridge
