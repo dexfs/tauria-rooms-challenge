@@ -8,7 +8,7 @@ interface Input {
 }
 
 class GetRoomsByUsername {
-  public async execute({ username }: Input): Promise<Room[]> {
+  public async execute({ username }: Input): Promise<Room[][]> {
     const usersRepository = getCustomRepository(UsersRepository);
     const user = await usersRepository.findByUsername(username, {
       relations: ['rooms', 'rooms.room'],
@@ -18,7 +18,7 @@ class GetRoomsByUsername {
       throw new NotFound('User not found!');
     }
 
-    const rooms = user.rooms.reduce((acc, current) => {
+    const rooms = user.rooms.reduce<Room[][]>((acc, current) => {
       acc = [...acc, current.room];
       return acc;
     }, []);
