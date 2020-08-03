@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
   OneToMany,
-  OneToOne,
+  ManyToOne,
 } from 'typeorm';
 
 import User from '@modules/users/entities/User';
@@ -20,7 +20,7 @@ class Room {
   @Column()
   name: string;
 
-  @Column({ name: 'host_user' })
+  @Column({ name: 'host_user', unique: false })
   hostUser: string;
 
   @Column({ name: 'capacity_limit', nullable: true, default: 5 })
@@ -30,7 +30,7 @@ class Room {
   @JoinColumn({ name: 'room_id' })
   participants: RoomParticipant[];
 
-  @OneToOne(type => User, room => Room)
+  @ManyToOne(type => User, room => Room)
   @JoinColumn({ name: 'host_user' })
   host: User;
 
