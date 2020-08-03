@@ -109,7 +109,7 @@ POST - /users/register
 {
 	"username": "username",
 	"password": "12345678",
-	"mobileToken": "token" // optional
+	"mobileToken": "token"
 }
 ```
 
