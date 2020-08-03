@@ -1,4 +1,4 @@
-# Video Rooms Challenge
+# Video Rooms Challenge ![Video Server Rooms](https://github.com/dexfs/tauria-rooms-challenge/workflows/Video%20Server%20Rooms/badge.svg)
 
 ## ❯ Table of contents
 

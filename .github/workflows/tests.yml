@@ -1,4 +1,4 @@
-name: Project CI
+name: Video Server Rooms
 
 on:
   pull_request:
