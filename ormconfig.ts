@@ -37,7 +37,7 @@ const connectionOptions = [
     port: Number(process.env.TYPEORM_PORT),
     username: String(process.env.TYPEORM_USERNAME),
     password: String(process.env.TYPEORM_PASSWORD),
-    synchronize: false,
+    synchronize: true,
     logging: false,
     entities,
     migrations,

@@ -21,5 +21,6 @@ module.exports = {
     "**/*.spec.ts"
   ],
   verbose: true,
-  testPathIgnorePatterns: ['/node_modules/', '/__utils', '/__documents/']
+  testPathIgnorePatterns: ['/node_modules/', '/__utils'],
+  setupFilesAfterEnv: ["jest-extended"]
 };
