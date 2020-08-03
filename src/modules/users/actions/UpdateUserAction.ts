@@ -7,9 +7,15 @@ import User from '../entities/User';
 
 interface Input {
   id: string;
+  currentPassword?: string;
+  newPassword?: string;
+  mobileToken?: string;
+}
+
+interface IVerifyPassword {
+  user: User;
   currentPassword: string;
   newPassword: string;
-  mobileToken?: string;
 }
 
 class UpdateUserAction {
@@ -19,12 +25,6 @@ class UpdateUserAction {
     newPassword,
     mobileToken,
   }: Input): Promise<User | undefined> {
-    if (!currentPassword || !newPassword) {
-      throw new BadRequest(
-        "It's necessary to pass the current and the new password.",
-      );
-    }
-
     const userRepository = getCustomRepository(UserRepository);
     const userFound = await userRepository.findOne({
       where: { id },
@@ -35,26 +35,38 @@ class UpdateUserAction {
       throw new NotFound(`Oh no!, user not found`);
     }
 
-    const isCorrectPassword = await compare(
-      currentPassword,
-      userFound.password,
-    );
-
-    if (!isCorrectPassword) {
-      throw new BadRequest('Current password is not valid.');
+    if (currentPassword && !newPassword) {
+      throw new BadRequest("It's necessary to pass a new password.");
     }
 
-    const passwordHash = await hash(newPassword, 10);
+    if (currentPassword && newPassword) {
+      const passwordHash = await this.verifyCurrentPasswordAndGenerateHash({
+        user: userFound,
+        currentPassword,
+        newPassword,
+      });
+      userFound.password = passwordHash;
+    }
 
-    const user = await userRepository.save({
-      ...userFound,
-      password: passwordHash,
-      mobileToken,
-    });
+    userFound.mobileToken = mobileToken as string;
+
+    const user = await userRepository.save(userFound);
 
     delete user.password;
 
     return user;
+  }
+
+  private async verifyCurrentPasswordAndGenerateHash({
+    user,
+    currentPassword,
+    newPassword,
+  }: IVerifyPassword) {
+    const isCorrectPassword = await compare(currentPassword, user.password);
+    if (!isCorrectPassword) {
+      throw new BadRequest('Current password is not valid.');
+    }
+    return hash(newPassword, 10);
   }
 }
 
