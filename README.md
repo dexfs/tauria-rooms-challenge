@@ -1,6 +1,6 @@
 # Video Rooms Challenge
 
-# ❯ Table of contents
+## ❯ Table of contents
 
 - [Introduction](#-introduction)
 - [Requirements](#-requirements)
@@ -13,19 +13,19 @@
 
 - [Routes and Payloads](#-routes-and-payloads)
 
-# ❯ Introduction
+## ❯ Introduction
 
 This project is for Video Server Challenge
 It's an API for handle users and video rooms.
 
-# ❯ Requirements
+## ❯ Requirements
 
 - [Node.js](https://nodejs.org/en/)
 - npm
 - [PostgresSQL](https://www.postgresql.org/download/)
 - [Docker(optional)](https://docs.docker.com/get-docker/)
 
-# ❯ Libraries
+## ❯ Libraries
 - [Express](https://expressjs.com/)
 - [Typescript](https://www.typescriptlang.org/)
 - [TypeORM Seeding](https://github.com/w3tecch/typeorm-seeding)
@@ -34,7 +34,7 @@ It's an API for handle users and video rooms.
 - [Eslint](https://eslint.org/)
 -
 
-# ❯ Installation
+## ❯ Installation
 
 ```bash
 $ yarn
@@ -47,7 +47,7 @@ $ docker-compose up -d
 ```
 > It will create 2 containers with app database and test database.
 
-# ❯ Enviroment file
+## ❯ Enviroment file
 
 create .env file
 ```bash
@@ -56,7 +56,7 @@ $ cp .env.example .env.dev
 > the .env.example is with database info to run the project with docker.
 
 
-# ❯ Migrations and Seeders
+## ❯ Migrations and Seeders
 
 ```bash
 # migration
@@ -69,14 +69,14 @@ $ yarn seed:run -c development|test -s CreateRoomsAndUsers
 ```
 > It will create users and rooms data
 
-# ❯ Running the app
+## ❯ Running the app
 
 ```bash
 # development
 $ yarn dev:server
 ```
 
-# ❯ Tests
+## ❯ Tests
 
 ```bash
 # creating .env.test file
@@ -86,7 +86,7 @@ $ cp .env.test.example .env.test
 $ yarn test
 ```
 
-# ❯ Routes and Payloads
+## ❯ Routes and Payloads
 
 ### For Authenticated routes you need pass a token
 
@@ -97,7 +97,7 @@ $ yarn test
 ```
 
 
-# Register
+## Register
 
 ```
 POST - /users/register
@@ -113,7 +113,7 @@ POST - /users/register
 }
 ```
 
-# Authentication
+## Authentication
 
 ```
 POST - /authenticate
@@ -128,19 +128,19 @@ POST - /authenticate
 }
 ```
 
-# Users
-## Get users (no auth required): returns a list of all users
+## Users
+### Get users (no auth required): returns a list of all users
 
 ```
 GET - /users
 ```
-## Get users (no auth required): return the user with matching username
+### Get users (no auth required): return the user with matching username
 
 ```
 GET - /users/:username
 ```
 
-## Get the rooms that a user is in: given a username, returns a list of rooms
+### Get the rooms that a user is in: given a username, returns a list of rooms
 that the user is in.
 
 ```
@@ -148,7 +148,7 @@ GET - /users/:username/rooms
 ```
 
 
-## Update users (must be signed in as the user): updates password and/or mobile_token of the user
+### Update users (must be signed in as the user): updates password and/or mobile_token of the user
 
 ```
 UPDATE - /users
@@ -163,21 +163,21 @@ UPDATE - /users
 }
 ```
 
-## Get users (no auth required): return the user with matching username
+### Get users (no auth required): return the user with matching username
 
 ```
 GET - /users/:username
 ```
 
-## Delete User (must be signed in as the user): deletes the user
+### Delete User (must be signed in as the user): deletes the user
 
 ```
 DELETE - /users
 ```
 
-# Rooms
+## Rooms
 
-## Create a room (signed in as a user): creates a room hosted by the current user,with an optional capacity limit. Default is 5
+### Create a room (signed in as a user): creates a room hosted by the current user,with an optional capacity limit. Default is 5
 
 ```
 POST - /rooms
@@ -188,11 +188,11 @@ POST - /rooms
 ```json
 {
 	"name": "ROOM_NAME",
-	"capacityLimit": 12  // optional
+	"capacityLimit": 12
 }
 ```
 
-## Change host (must be signin as the host): changes the host of the user from the current user to another user
+### Change host (must be signin as the host): changes the host of the user from the current user to another user
 
 ```
 PUT - /rooms/change-room-host
@@ -207,7 +207,7 @@ PUT - /rooms/change-room-host
 }
 ```
 
-## Join/leave (signed in as a user): joins/leaves the room as the current user
+### Join/leave (signed in as a user): joins/leaves the room as the current user
 
 ```
 POST - /rooms/:roomId/join
@@ -216,7 +216,7 @@ POST - /rooms/:roomId/join
 POST - /rooms/:roomId/leave
 ```
 
-## Get info (no auth): given a room guid, gets information about a room
+### Get info (no auth): given a room guid, gets information about a room
 ```
 GET - /rooms/:roomId/info
 ```
