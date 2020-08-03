@@ -3,20 +3,25 @@ import { validate } from 'express-validation';
 
 import isAuthorized from '@modules/users/middleware/isAuthorized';
 import RoomsController from './controllers/RoomsController';
+import getInfoRoomValidation from './validations/getInfoRoomValidation';
 import createRoomValidation from './validations/createRoomValidation';
 import changeRoomHostValidation from './validations/changeRoomHostValidation';
 import roomIdValidation from './validations/roomIdValidation';
 
 const roomsRouter = Router();
 
-roomsRouter.get('/:roomId/info', RoomsController.show);
+roomsRouter.get(
+  '/:roomId/info',
+  validate(getInfoRoomValidation, {}, {}),
+  RoomsController.show,
+);
 roomsRouter.post(
   '/',
   isAuthorized,
   validate(createRoomValidation, {}, {}),
   RoomsController.create,
 );
-roomsRouter.post(
+roomsRouter.put(
   '/change-room-host',
   isAuthorized,
   validate(changeRoomHostValidation, {}, {}),
