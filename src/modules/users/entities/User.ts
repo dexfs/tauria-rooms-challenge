@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
   Entity,
   Column,
@@ -6,7 +7,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
+import { validateOrReject, IsDefined, IsNotEmpty } from 'class-validator';
+
 import { hash } from 'bcryptjs';
 
 import RoomParticipant from '@modules/rooms/entities/RoomParticipant';
@@ -17,10 +21,13 @@ class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: false })
+  @IsDefined()
+  @IsNotEmpty()
   username: string;
 
-  @Column({ select: false })
+  @Column({ select: false, nullable: false })
+  @IsNotEmpty()
   password: string;
 
   @Column({ name: 'mobile_token', nullable: true })
@@ -41,6 +48,13 @@ class User {
   @BeforeInsert()
   async setPassword(password: string) {
     this.password = await hash(password || this.password, 10);
+  }
+
+  // HOOKS
+  @BeforeInsert()
+  @BeforeUpdate()
+  validate() {
+    return validateOrReject(this);
   }
 }
 
