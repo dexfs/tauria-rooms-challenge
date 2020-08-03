@@ -6,10 +6,18 @@ import {
   Connection,
 } from 'typeorm';
 import 'express-async-errors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import * as Sentry from '@sentry/node';
 import cors from 'cors';
 import handleErrors from '@shared/middlewares/handleErrors';
 import { loadEnv } from '@shared/utils/loadEnvironments';
 import routes from './routes';
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
 
 loadEnv();
 class Server {
@@ -19,6 +27,7 @@ class Server {
 
   constructor() {
     this.app = express();
+    Sentry.init({ dsn: process.env.SENTRY_DSN });
     this.enableMiddlewares();
     this.loadRoutes();
     this.enableErrorHandlers();
@@ -53,8 +62,12 @@ class Server {
   }
 
   enableMiddlewares(): void {
+    this.app.use(Sentry.Handlers.requestHandler());
+    this.app.disable('x-powered-by');
     this.app.use(cors());
     this.app.use(express.json());
+    this.app.use(helmet());
+    this.app.use(limiter);
   }
 
   enableErrorHandlers(): void {
