@@ -13,7 +13,7 @@ import routes from './routes';
 
 loadEnv();
 class Server {
-  private app: express.Express;
+  public app: express.Express;
 
   private connection: Connection;
 
