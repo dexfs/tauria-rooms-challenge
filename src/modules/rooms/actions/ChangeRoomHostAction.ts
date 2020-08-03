@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import { NotFound } from '@shared/utils/errors';
+import { NotFound, BadRequest } from '@shared/utils/errors';
 import RoomRepository from '../repositories/RoomRepository';
 import Room from '../entities/Room';
 
@@ -15,6 +15,10 @@ class ChangeRoomHostAction {
     currentHost,
     newHost,
   }: Input): Promise<Room | undefined> {
+    if (currentHost === newHost) {
+      throw new BadRequest("You're already host of this room.");
+    }
+
     const roomRepository = getCustomRepository(RoomRepository);
 
     const roomFound = await roomRepository.findByIdAndHost({
