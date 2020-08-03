@@ -5,7 +5,9 @@ module.exports = {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
-    '<rootDir>/src/modules/**/services/*.ts'
+    '<rootDir>/src/modules/**/services/*.ts',
+    '<rootDir>/src/modules/**/actions/*.ts',
+
   ],
   coverageDirectory: 'coverage',
   coverageReporters: [
@@ -19,4 +21,5 @@ module.exports = {
     "**/*.spec.ts"
   ],
   verbose: true,
+  testPathIgnorePatterns: ['/node_modules/', '/__utils', '/__documents/']
 };
