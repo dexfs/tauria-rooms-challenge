@@ -8,11 +8,17 @@ import JoinRoomAction from '../actions/JoinRoomAction';
 import LeaveRoomAction from '../actions/LeaveRoomAction';
 
 class RoomsController {
-  static async show(request: Request, response: Response): Promise<Response> {
+  static async show(
+    request: Request,
+    response: Response,
+  ): Promise<Response | void> {
     const { roomId } = request.params;
     const roomRepository = getCustomRepository(RoomRepository);
-    const rooms = await roomRepository.findOne(roomId);
-    return response.json(rooms);
+    const room = await roomRepository.findOne(roomId);
+    if (!room) {
+      return response.status(404).end();
+    }
+    return response.json(room);
   }
 
   static async create(request: Request, response: Response): Promise<Response> {
