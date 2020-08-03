@@ -151,7 +151,7 @@ GET - /users/:username/rooms
 ### Update users (must be signed in as the user): updates password and/or mobile_token of the user
 
 ```
-UPDATE - /users
+PUT - /users
 ```
 **Payload**
 
